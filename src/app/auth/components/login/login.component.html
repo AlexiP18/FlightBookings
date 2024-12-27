@@ -1,0 +1,61 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <form
+    class="w-full max-w-lg bg-white rounded-lg shadow-md p-8"
+    (ngSubmit)="onLogin()"
+    [formGroup]="loginForm"
+  >
+    <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">
+      Iniciar Sesión
+    </h2>
+
+    <!-- Usuario/Email -->
+    <div class="relative mb-6">
+      <label for="email" class="block text-lg font-medium text-gray-700">
+        Usuario/Email
+      </label>
+      <input
+        id="email"
+        formControlName="email"
+        type="email"
+        class="mt-2 block w-full border border-gray-300 rounded-md p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+      />
+    </div>
+
+    <!-- Contraseña -->
+    <div class="relative mb-6">
+      <label for="password" class="block text-lg font-medium text-gray-700">
+        Contraseña
+      </label>
+      <div class="relative">
+        <input
+          id="password"
+          formControlName="password"
+          [type]="showPassword ? 'text' : 'password'"
+          class="mt-2 block w-full border border-gray-300 rounded-md p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+        />
+        <button
+          type="button"
+          (click)="togglePasswordVisibility()"
+          class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-600 hover:text-gray-800"
+        >
+          <span class="material-icons text-2xl" *ngIf="!showPassword">visibility</span>
+          <span class="material-icons text-2xl" *ngIf="showPassword">visibility_off</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mensaje de Error -->
+    <div *ngIf="loginForm.invalid && loginForm.touched" class="text-red-600 text-sm mb-4">
+      Por favor, complete todos los campos correctamente.
+    </div>
+
+    <!-- Botón de Iniciar Sesión -->
+    <button
+      type="submit"
+      class="w-full bg-indigo-600 text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-indigo-700 transition-all"
+    >
+      Iniciar Sesión
+    </button>
+  </form>
+</div>
+

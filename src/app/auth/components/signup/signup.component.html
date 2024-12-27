@@ -1,0 +1,111 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <form
+    class="w-full max-w-lg bg-white rounded-lg shadow-md p-8"
+    (ngSubmit)="onRegister()"
+    [formGroup]="registroForm"
+  >
+    <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">
+      Crear Cuenta
+    </h2>
+
+    <!-- Nombre -->
+    <div class="relative mb-6">
+      <label for="nombre" class="block text-lg font-medium text-gray-700">
+        Nombre
+      </label>
+      <input
+        id="nombre"
+        formControlName="nombre"
+        type="text"
+        class="mt-2 block w-full border border-gray-300 rounded-md p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+      />
+      <div *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.invalid" class="text-red-600 text-sm mt-1">
+        El nombre es obligatorio y debe tener al menos 3 caracteres.
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="relative mb-6">
+      <label for="email" class="block text-lg font-medium text-gray-700">
+        Email
+      </label>
+      <input
+        id="email"
+        formControlName="email"
+        type="email"
+        class="mt-2 block w-full border border-gray-300 rounded-md p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+      />
+      <div *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.invalid" class="text-red-600 text-sm mt-1">
+        Por favor ingrese un email válido.
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="relative mb-6">
+      <label for="password" class="block text-lg font-medium text-gray-700">
+        Contraseña
+      </label>
+      <div class="relative">
+        <input
+          id="password"
+          formControlName="password"
+          [type]="showPassword ? 'text' : 'password'"
+          class="mt-2 block w-full border border-gray-300 rounded-md p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+        />
+        <button
+          type="button"
+          (click)="togglePasswordVisibility()"
+          class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-600 hover:text-gray-800"
+        >
+          <span class="material-icons text-2xl" *ngIf="!showPassword">visibility</span>
+          <span class="material-icons text-2xl" *ngIf="showPassword">visibility_off</span>
+        </button>
+      </div>
+      <div *ngIf="registroForm.get('password')?.touched && registroForm.get('password')?.invalid" class="text-red-600 text-sm mt-1">
+        La contraseña es obligatoria y debe tener al menos 6 caracteres.
+      </div>
+    </div>
+
+    <!-- Confirmar Contraseña -->
+    <div class="relative mb-6">
+      <label for="confirmPassword" class="block text-lg font-medium text-gray-700">
+        Confirmar Contraseña
+      </label>
+      <div class="relative">
+        <input
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          [type]="showPassword ? 'text' : 'password'"
+          class="mt-2 block w-full border border-gray-300 rounded-md p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+        />
+        <button
+          type="button"
+          (click)="togglePasswordVisibility()"
+          class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-600 hover:text-gray-800"
+        >
+          <span class="material-icons text-2xl" *ngIf="!showPassword">visibility</span>
+          <span class="material-icons text-2xl" *ngIf="showPassword">visibility_off</span>
+        </button>
+      </div>
+      <div *ngIf="registroForm.get('confirmPassword')?.touched && registroForm.get('confirmPassword')?.invalid" class="text-red-600 text-sm mt-1">
+        La confirmación de contraseña es obligatoria.
+      </div>
+      <div *ngIf="registroForm.hasError('passwordMismatch') && registroForm.get('confirmPassword')?.touched" class="text-red-600 text-sm mt-1">
+        Las contraseñas no coinciden.
+      </div>
+    </div>
+
+    <!-- Mensaje de Error General -->
+    <div *ngIf="registroForm.invalid && registroForm.touched" class="text-red-600 text-sm mb-4">
+      Por favor, complete todos los campos correctamente.
+    </div>
+
+    <!-- Botón de Registro -->
+    <button
+      type="submit"
+      class="w-full bg-indigo-600 text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-indigo-700 transition-all"
+    >
+      Registrarse
+    </button>
+  </form>
+</div>
