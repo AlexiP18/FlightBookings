@@ -1,0 +1,58 @@
+.material-icons {
+  font-size: 24px;
+}
+
+input,
+select {
+  transition: border-color 0.2s ease-in-out;
+}
+
+input:focus,
+select:focus {
+  border-color: #4f46e5; /* Indigo */
+  outline: none;
+  box-shadow: 0 0 4px rgba(79, 70, 229, 0.5);
+}
+
+.max-h-90vh {
+  max-height: 90vh; /* Modal responsive */
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #4f46e5 #f3f4f6; /* Indigo y gris claro */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4f46e5;
+  border-radius: 10px;
+}
+
+.modal {
+  max-width: 90%; /* Modal más estrecho en pantallas pequeñas */
+  margin: auto; /* Centra el modal horizontalmente */
+  border-radius: 8px; /* Bordes ligeramente redondeados */
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .modal {
+    max-width: 60%; /* Más ancho en pantallas medianas */
+  }
+}
+
+@media (min-width: 1024px) {
+  .modal {
+    max-width: 50%; /* Aumenta el tamaño en pantallas grandes */
+  }
+}

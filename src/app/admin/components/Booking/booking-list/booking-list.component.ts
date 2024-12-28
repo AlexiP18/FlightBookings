@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrl: './booking-list.component.css'
 })
 export class BookingListComponent {
+  showDetailModal = false;
+  selectedReservation: any = null;
   reservations = [
     { reservationId: 'R001', userId: 'U001', flightId: 'F001', reservationDate: new Date(), status: 'Activa' },
     { reservationId: 'R002', userId: 'U002', flightId: 'F002', reservationDate: new Date(), status: 'Cancelada' },
@@ -69,10 +71,14 @@ export class BookingListComponent {
     alert(`El estado de la reserva con ID ${reservation.reservationId} cambió a: ${reservation.status}`);
     // Aquí puedes implementar la lógica para guardar este cambio.
   }
-  
+
   viewReservationDetails(reservation: any) {
-    alert(`Detalles de la reserva con ID ${reservation.reservationId}`);
-    // Aquí puedes implementar la lógica para mostrar los detalles de la reserva.
+    this.selectedReservation = reservation;
+    this.showDetailModal = true;
+  }
+
+  closeDetailModal() {
+    this.showDetailModal = false;
   }
 
   updateRowsPerPage() {

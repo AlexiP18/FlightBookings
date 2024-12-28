@@ -1,0 +1,52 @@
+.modal {
+  max-width: 95%; /* Más ancho en pantallas pequeñas */
+  margin: auto; /* Centra el modal horizontalmente */
+  border-radius: 8px; /* Bordes ligeramente redondeados */
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.max-h-90vh {
+  max-height: 90vh; /* Limita la altura en pantallas pequeñas */
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #4f46e5 #f3f4f6; /* Indigo y gris claro */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4f46e5;
+  border-radius: 10px;
+}
+
+/* Tipografía más grande */
+h2,
+h3 {
+  font-size: 1.5rem; /* Tamaño de títulos */
+}
+
+p {
+  font-size: 1.125rem; /* Tamaño del texto principal */
+}
+
+@media (min-width: 768px) {
+  .modal {
+    max-width: 70%; /* Más ancho en pantallas medianas */
+  }
+}
+
+@media (min-width: 1024px) {
+  .modal {
+    max-width: 60%; /* Más ancho en pantallas grandes */
+  }
+}

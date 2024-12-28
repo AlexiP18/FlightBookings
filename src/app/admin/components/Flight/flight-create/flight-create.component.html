@@ -1,1 +1,181 @@
-<p>flight-create works!</p>
+<div
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center px-2 sm:px-4"
+  *ngIf="showModal"
+>
+  <div
+    class="bg-white rounded-lg shadow-lg w-full max-w-[calc(100%-1rem)] sm:max-w-xl max-h-[90vh] flex flex-col overflow-hidden"
+  >
+    <!-- Header -->
+    <div class="flex justify-between items-center bg-indigo-600 text-white px-4 py-3">
+      <h2 class="text-lg font-semibold">Agregar Vuelo</h2>
+      <button (click)="closeModal()" class="text-2xl hover:text-gray-300">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <form
+      class="p-4 space-y-4 overflow-y-auto flex-1 custom-scrollbar"
+      [formGroup]="flightForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <!-- Aerolínea -->
+      <div>
+        <label for="aerolinea" class="block text-base font-medium text-gray-700">
+          Aerolínea
+        </label>
+        <select
+          id="aerolinea"
+          formControlName="aerolinea"
+          class="block w-full mt-2 p-3 border rounded-md text-base"
+        >
+          <option *ngFor="let airline of aerolineas" [value]="airline">
+            {{ airline }}
+          </option>
+        </select>
+        <p
+          *ngIf="flightForm.get('aerolinea')?.invalid && flightForm.get('aerolinea')?.touched"
+          class="text-sm text-red-600"
+        >
+          Por favor, seleccione una aerolínea.
+        </p>
+      </div>
+
+      <!-- Origen -->
+      <div>
+        <label for="origen" class="block text-base font-medium text-gray-700">
+          Origen
+        </label>
+        <select
+          id="origen"
+          formControlName="origen"
+          class="block w-full mt-2 p-3 border rounded-md text-base"
+        >
+          <option *ngFor="let origin of origenes" [value]="origin">
+            {{ origin }}
+          </option>
+        </select>
+        <p
+          *ngIf="flightForm.get('origen')?.invalid && flightForm.get('origen')?.touched"
+          class="text-sm text-red-600"
+        >
+          Por favor, seleccione un origen.
+        </p>
+      </div>
+
+      <!-- Destino -->
+      <div>
+        <label for="destino" class="block text-base font-medium text-gray-700">
+          Destino
+        </label>
+        <div class="relative">
+          <input
+            id="destino"
+            formControlName="destino"
+            type="text"
+            placeholder="Buscar destino..."
+            class="block w-full mt-2 p-3 border rounded-md text-base"
+            (focus)="onSearchCity($event)"
+            (input)="onSearchCity($event)"
+            (blur)="closeList()"
+          />
+          <ul
+            class="absolute z-10 bg-white border rounded-md w-full max-h-40 overflow-y-auto mt-1 shadow-lg custom-scrollbar"
+            *ngIf="showCityList"
+          >
+            <li
+              *ngFor="let city of filteredCiudades"
+              (mousedown)="selectCity(city)"
+              class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+            >
+              {{ city }}
+            </li>
+          </ul>
+        </div>
+        <p
+          *ngIf="flightForm.get('destino')?.invalid && flightForm.get('destino')?.touched"
+          class="text-sm text-red-600"
+        >
+          Por favor, seleccione un destino válido.
+        </p>
+      </div>
+
+      <!-- Fecha -->
+      <div>
+        <label for="fecha" class="block text-base font-medium text-gray-700">
+          Fecha
+        </label>
+        <input
+          id="fecha"
+          formControlName="fecha"
+          type="date"
+          class="block w-full mt-2 p-3 border rounded-md text-base"
+        />
+        <p
+          *ngIf="flightForm.get('fecha')?.invalid && flightForm.get('fecha')?.touched"
+          class="text-sm text-red-600"
+        >
+          Por favor, seleccione una fecha.
+        </p>
+      </div>
+
+      <!-- Precio -->
+      <div>
+        <label for="precio" class="block text-base font-medium text-gray-700">
+          Precio
+        </label>
+        <input
+          id="precio"
+          formControlName="precio"
+          type="number"
+          placeholder="0.00"
+          class="block w-full mt-2 p-3 border rounded-md text-base"
+          max="10000"
+        />
+        <p
+          *ngIf="flightForm.get('precio')?.invalid && flightForm.get('precio')?.touched"
+          class="text-sm text-red-600"
+        >
+          El precio debe ser menor o igual a $10,000.
+        </p>
+      </div>
+
+      <!-- Asientos -->
+      <div>
+        <label for="asientos" class="block text-base font-medium text-gray-700">
+          Cantidad de Asientos
+        </label>
+        <input
+          id="asientos"
+          formControlName="asientos"
+          type="number"
+          class="block w-full mt-2 p-3 border rounded-md text-base"
+          max="800"
+        />
+        <p
+          *ngIf="flightForm.get('asientos')?.invalid && flightForm.get('asientos')?.touched"
+          class="text-sm text-red-600"
+        >
+          La cantidad máxima es 800 asientos.
+        </p>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="flex justify-end space-x-4 bg-gray-100 px-6 py-4">
+      <button
+        (click)="closeModal()"
+        class="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-gray-600"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        [disabled]="flightForm.invalid"
+        class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700"
+      >
+        Agregar
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,69 @@
-<p>booking-detail works!</p>
+<div
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center px-2 sm:px-4"
+  *ngIf="showModal"
+>
+  <div
+    class="modal max-h-90vh flex flex-col overflow-hidden"
+  >
+    <!-- Header -->
+    <div class="flex items-center bg-indigo-600 text-white px-6 py-4">
+      <h2 class="text-lg font-semibold mr-4"> <!-- Se añade un margen a la derecha -->
+        Detalle Reserva - {{ reservation?.reservationId }}
+      </h2>
+      <button (click)="closeModal()" class="text-2xl hover:text-gray-300">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="p-4 space-y-4 overflow-y-auto custom-scrollbar flex-1">
+      <!-- Usuario -->
+      <div>
+        <h3 class="text-lg font-semibold mb-2">
+          Usuario - {{ reservation?.userId }}
+        </h3>
+        <p class="text-base text-gray-700">
+          <span class="font-medium">Nombre:</span> {{ reservation?.userName }}
+        </p>
+        <p class="text-base text-gray-700">
+          <span class="font-medium">Email:</span> {{ reservation?.userEmail }}
+        </p>
+      </div>
+
+      <!-- Vuelo -->
+      <div>
+        <h3 class="text-lg font-semibold mb-2">
+          Vuelo - {{ reservation?.flightId }}
+        </h3>
+        <p class="text-base text-gray-700">
+          <span class="font-medium">Aerolínea:</span> {{ reservation?.airline }}
+        </p>
+        <p class="text-base text-gray-700">
+          <span class="font-medium">Origen:</span> {{ reservation?.origin }}
+        </p>
+        <p class="text-base text-gray-700">
+          <span class="font-medium">Destino:</span> {{ reservation?.destination }}
+        </p>
+        <p class="text-base text-gray-700">
+          <span class="font-medium">Fecha/Hora:</span> {{ reservation?.dateTime | date: 'short' }}
+        </p>
+        <p class="text-base text-gray-700">
+          <span class="font-medium">Precio:</span> {{ reservation?.price | currency }}
+        </p>
+        <p class="text-base text-gray-700">
+          <span class="font-medium">Asientos:</span> {{ reservation?.seats }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex justify-end bg-gray-100 px-6 py-4">
+      <button
+        (click)="closeModal()"
+        class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700"
+      >
+        Aceptar
+      </button>
+    </div>
+  </div>
+</div>

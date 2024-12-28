@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-flight-list',
@@ -6,13 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './flight-list.component.css'
 })
 export class FlightListComponent implements OnInit {
+  showModal = false;
   flights = [
-    { flightId: 'A123', origin: 'Quito', destination: 'Guayaquil', dateTime: new Date(), price: 120.0, availableSeats: 30 },
-    { flightId: 'B456', origin: 'Cuenca', destination: 'Manta', dateTime: new Date(), price: 100.0, availableSeats: 25 },
+    { flightId: 'A123', airline: 'Avianca', origin: 'Quito', destination: 'Guayaquil', dateTime: new Date(), price: 120.0, availableSeats: 30 },
+    { flightId: 'B456',airline: 'KLM', origin: 'Cuenca', destination: 'Manta', dateTime: new Date(), price: 100.0, availableSeats: 25 },
     // Más datos...
   ];
   filteredFlights = [...this.flights];
-  paginatedFlights: { flightId: string; origin: string; destination: string; dateTime: Date; price: number; availableSeats: number; }[] = [];
+  paginatedFlights: { flightId: string; airline: string, origin: string; destination: string; dateTime: Date; price: number; availableSeats: number; }[] = [];
   searchTerm = '';
 
   // Paginación
@@ -25,6 +26,14 @@ export class FlightListComponent implements OnInit {
 
   ngOnInit(): void {
     this.calculatePagination();
+  }
+
+  openModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 
   filterFlights() {

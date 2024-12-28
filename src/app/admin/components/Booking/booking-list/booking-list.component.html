@@ -112,3 +112,8 @@
     </div>
   </div>
 </div>
+<app-booking-detail
+  [showModal]="showDetailModal"
+  [reservation]="selectedReservation"
+  (close)="showDetailModal = false"
+></app-booking-detail>

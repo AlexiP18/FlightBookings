@@ -22,7 +22,7 @@
         <!-- Botón Agregar Vuelo -->
         <button
           class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 space-x-2"
-          (click)="addFlight()"
+          (click)="openModal()"
         >
           <span class="material-icons">add</span>
           <span>Agregar Vuelo</span>
@@ -36,6 +36,7 @@
         <thead>
           <tr class="bg-gray-200 text-left">
             <th class="px-4 py-2 border">VueloID</th>
+            <th class="px-4 py-2 border">Aerolinea</th>
             <th class="px-4 py-2 border">Origen</th>
             <th class="px-4 py-2 border">Destino</th>
             <th class="px-4 py-2 border">FechaHora</th>
@@ -50,6 +51,7 @@
             class="hover:bg-gray-100"
           >
             <td class="px-4 py-2 border">{{ flight.flightId }}</td>
+            <td class="px-4 py-2 border">{{ flight.airline }}</td>
             <td class="px-4 py-2 border">{{ flight.origin }}</td>
             <td class="px-4 py-2 border">{{ flight.destination }}</td>
             <td class="px-4 py-2 border">{{ flight.dateTime | date: 'short' }}</td>
@@ -120,3 +122,4 @@
     </div>
   </div>
 </div>
+<app-flight-create *ngIf="showModal" (close)="closeModal()"></app-flight-create>
