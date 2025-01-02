@@ -1,0 +1,17 @@
+.container {
+  max-width: 1200px;
+}
+
+button {
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+button span.material-icons {
+  font-size: 25px;
+}
+
+button:hover {
+  transform: scale(1.05);
+}

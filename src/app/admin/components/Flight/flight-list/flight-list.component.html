@@ -22,7 +22,7 @@
         <!-- Botón Agregar Vuelo -->
         <button
           class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 space-x-2"
-          (click)="openModal()"
+          (click)="openCreateModal()"
         >
           <span class="material-icons">add</span>
           <span>Agregar Vuelo</span>
@@ -51,12 +51,12 @@
             class="hover:bg-gray-100"
           >
             <td class="px-4 py-2 border">{{ flight.flightId }}</td>
-            <td class="px-4 py-2 border">{{ flight.airline }}</td>
-            <td class="px-4 py-2 border">{{ flight.origin }}</td>
-            <td class="px-4 py-2 border">{{ flight.destination }}</td>
-            <td class="px-4 py-2 border">{{ flight.dateTime | date: 'short' }}</td>
-            <td class="px-4 py-2 border">{{ flight.price | currency }}</td>
-            <td class="px-4 py-2 border">{{ flight.availableSeats }}</td>
+            <td class="px-4 py-2 border">{{ flight.aerolinea }}</td>
+            <td class="px-4 py-2 border">{{ flight.origen }}</td>
+            <td class="px-4 py-2 border">{{ flight.destino }}</td>
+            <td class="px-4 py-2 border">{{ flight.fecha | date: 'short' }}</td>
+            <td class="px-4 py-2 border">{{ flight.precio | currency }}</td>
+            <td class="px-4 py-2 border">{{ flight.asientos }}</td>
             <td class="px-4 py-2 border text-center">
               <div class="flex space-x-2 justify-center">
                 <button
@@ -68,7 +68,7 @@
                 </button>
                 <button
                   class="flex items-center px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 space-x-1"
-                  (click)="editFlight(flight.flightId)"
+                  (click)="openEditModal(flight)"
                 >
                   <span class="material-icons text-sm sm:text-base">edit</span>
                   <span>Editar</span>
@@ -122,4 +122,10 @@
     </div>
   </div>
 </div>
-<app-flight-create *ngIf="showModal" (close)="closeModal()"></app-flight-create>
+<!-- Modal -->
+<app-flight-create
+  [showModal]="showModal"
+  [flightData]="flightData"
+  (close)="showModal = false"
+  (save)="saveFlight($event)"
+></app-flight-create>

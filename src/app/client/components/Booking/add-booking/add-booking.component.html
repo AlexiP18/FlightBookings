@@ -1,0 +1,103 @@
+<div
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center px-2 sm:px-4"
+  *ngIf="showModal"
+>
+  <div
+    class="bg-white rounded-lg shadow-lg w-full max-w-[calc(100%-1rem)] sm:max-w-xl max-h-[90vh] flex flex-col overflow-hidden"
+  >
+    <!-- Header -->
+    <div class="flex justify-between items-center bg-indigo-600 text-white px-4 py-3">
+      <h2 class="text-lg font-semibold">Agregar Reserva</h2>
+      <button (click)="closeModal()" class="text-2xl hover:text-gray-300">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <form
+      class="p-4 space-y-4 overflow-y-auto flex-1 custom-scrollbar"
+      [formGroup]="bookingForm"
+      (ngSubmit)="confirmBooking()"
+    >
+      <!-- Origen -->
+      <div>
+        <label for="origen" class="block text-sm font-medium text-gray-700">Origen</label>
+        <input
+          id="origen"
+          formControlName="origen"
+          type="text"
+          class="block w-full mt-2 p-3 border rounded-md text-base"
+        />
+      </div>
+
+      <!-- Destino -->
+      <div class="relative">
+        <label for="destino" class="block text-sm font-medium text-gray-700">Destino</label>
+        <input
+          id="destino"
+          formControlName="destino"
+          type="text"
+          placeholder="Buscar destino..."
+          class="block w-full mt-2 p-3 border rounded-md text-base"
+          (focus)="onSearchCity($event)"
+          (input)="onSearchCity($event)"
+          (blur)="showCityList = false"
+        />
+        <ul
+          class="absolute z-10 bg-white border rounded-md w-full max-h-40 overflow-y-auto mt-1 shadow-lg custom-scrollbar"
+          *ngIf="showCityList"
+        >
+          <li
+            *ngFor="let city of filteredCiudades"
+            (mousedown)="selectCity(city)"
+            class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+          >
+            {{ city }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Fecha -->
+      <div>
+        <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha</label>
+        <input
+          id="fecha"
+          formControlName="fecha"
+          type="date"
+          class="block w-full mt-2 p-3 border rounded-md text-base"
+        />
+      </div>
+
+      <!-- Pasajeros -->
+      <div>
+        <label for="pasajeros" class="block text-sm font-medium text-gray-700">Pasajeros</label>
+        <input
+          id="pasajeros"
+          formControlName="pasajeros"
+          type="number"
+          class="block w-full mt-2 p-3 border rounded-md text-base"
+          min="1"
+        />
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="flex justify-end space-x-4 bg-gray-100 px-6 py-4">
+      <button
+        (click)="closeModal()"
+        class="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-gray-600"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        [disabled]="bookingForm.invalid"
+        class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700"
+      >
+        Confirmar
+      </button>
+    </div>
+  </div>
+</div>
+
+

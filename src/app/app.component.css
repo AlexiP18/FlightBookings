@@ -1,0 +1,16 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.material-icons {
+  font-size: 20px;
+}
+
+.group-hover\:scale-110:hover {
+  transform: scale(1.1);
+}

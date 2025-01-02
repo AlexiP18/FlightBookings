@@ -1,0 +1,15 @@
+.container {
+  max-width: 800px;
+}
+
+.min-h-screen {
+  height: 100vh;
+}
+
+button {
+  transition: color 0.2s ease-in-out;
+}
+
+button:hover {
+  color: #4f46e5; /* Color indigo más oscuro */
+}

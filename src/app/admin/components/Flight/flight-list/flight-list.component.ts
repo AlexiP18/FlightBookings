@@ -7,14 +7,18 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class FlightListComponent implements OnInit {
   showModal = false;
+  flightData: any = null;
   flights = [
-    { flightId: 'A123', airline: 'Avianca', origin: 'Quito', destination: 'Guayaquil', dateTime: new Date(), price: 120.0, availableSeats: 30 },
-    { flightId: 'B456',airline: 'KLM', origin: 'Cuenca', destination: 'Manta', dateTime: new Date(), price: 100.0, availableSeats: 25 },
+    { flightId: 'A123', aerolinea: 'Avianca', origen: 'Quito', destino: 'Guayaquil', fecha: new Date(), precio: 120.0, asientos: 30 },
+    { flightId: 'B456',aerolinea: 'KLM', origen: 'Cuenca', destino: 'Manta', fecha: new Date(), precio: 100.0, asientos: 25 },
     // Más datos...
   ];
   filteredFlights = [...this.flights];
-  paginatedFlights: { flightId: string; airline: string, origin: string; destination: string; dateTime: Date; price: number; availableSeats: number; }[] = [];
+  paginatedFlights: { flightId: string; aerolinea: string, origen: string; destino: string; fecha: Date; precio: number; asientos: number; }[] = [];
   searchTerm = '';
+
+  isEditing = false; // Controlar si se está editando un vuelo
+  selectedFlight: any = null; // Vuelo seleccionado para editar
 
   // Paginación
   currentPage = 1;
@@ -28,8 +32,29 @@ export class FlightListComponent implements OnInit {
     this.calculatePagination();
   }
 
-  openModal() {
+  openCreateModal() {
+    this.flightData = null;
     this.showModal = true;
+  }
+
+  openEditModal(flight: any) {
+    console.log('Editando vuelo:', flight);
+    this.flightData = {...flight};
+    this.showModal = true;
+  }
+
+  saveFlight(flight: any) {
+    if (this.flightData) {
+      // Editar vuelo existente
+      const index = this.flights.findIndex((f) => f.flightId === this.flightData.id);
+      if (index !== -1) {
+        this.flights[index] = { ...this.flights[index], ...flight };
+      }
+    } else {
+      // Agregar nuevo vuelo
+      this.flights.push({ id: this.flights.length + 1, ...flight });
+    }
+    this.showModal = false;
   }
 
   closeModal() {
@@ -40,9 +65,10 @@ export class FlightListComponent implements OnInit {
     const lowerSearchTerm = this.searchTerm.toLowerCase();
     this.filteredFlights = this.flights.filter(
       (flight) =>
-        flight.origin.toLowerCase().includes(lowerSearchTerm) ||
-        flight.destination.toLowerCase().includes(lowerSearchTerm) ||
-        flight.flightId.toLowerCase().includes(lowerSearchTerm)
+        flight.origen.toLowerCase().includes(lowerSearchTerm) ||
+        flight.destino.toLowerCase().includes(lowerSearchTerm) ||
+        flight.flightId.toLowerCase().includes(lowerSearchTerm) ||
+        flight.aerolinea.toLowerCase().includes(lowerSearchTerm)
     );
     this.currentPage = 1;
     this.calculatePagination();

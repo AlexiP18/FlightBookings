@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -6,10 +6,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './flight-create.component.html',
   styleUrl: './flight-create.component.css'
 })
-export class FlightCreateComponent {
-  @Output() close = new EventEmitter<void>();
-  showModal = true; // Controla la visibilidad del modal
+export class FlightCreateComponent implements OnChanges{
+  @Input() showModal = false; // Controla la visibilidad del modal
+  @Input() flightData: any = null; // Datos del vuelo a editar
+  @Output() close = new EventEmitter<void>(); // Evento para cerrar el modal
+  @Output() save = new EventEmitter<any>(); // Evento para guardar los cambios
   flightForm: FormGroup;
+  title = 'Agregar Vuelo'; // Título del modal
   destinos = [
     'Nueva York',
     'París',
@@ -62,6 +65,23 @@ export class FlightCreateComponent {
     this.filteredCiudades = this.destinos;
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['flightData'] && this.flightData) {
+      console.log('Datos del vuelo recibidos para edición:', this.flightData);
+      const formattedFlightData = { ...this.flightData };
+      // Extraer solo la fecha (YYYY-MM-DD) del valor de fecha y hora
+      if (this.flightData.fecha) {
+        const date = new Date(this.flightData.fecha);
+        formattedFlightData.fecha = date.toISOString().split('T')[0]; // Solo la fecha
+      }
+      this.title = 'Editar Vuelo'; // Cambiar el título
+      this.flightForm.patchValue(formattedFlightData);
+    } else {
+      this.title = 'Agregar Vuelo'; // Título para creación
+      this.flightForm.reset(); // Limpiar el formulario
+    }
+  }
+
   onSearchCity(event: Event) {
     const input = event.target as HTMLInputElement;
     const value = input.value.trim();
@@ -105,6 +125,26 @@ export class FlightCreateComponent {
     } else {
       console.log('Formulario inválido');
       this.flightForm.markAllAsTouched();
+    }
+  }
+
+  saveFlight() {
+    if (this.flightForm.valid) {
+      const formData = this.flightForm.value;
+
+      // Combinar fecha seleccionada con la hora original
+      if (this.flightData && this.flightData.fecha) {
+        const originalDate = new Date(this.flightData.fecha);
+        const selectedDate = new Date(formData.fecha);
+
+        // Combinar fecha del input con la hora original
+        selectedDate.setHours(originalDate.getHours(), originalDate.getMinutes(), originalDate.getSeconds());
+        formData.fecha = selectedDate.toISOString(); // Fecha y hora combinadas
+      }
+
+      console.log('Datos a guardar:', formData);
+      this.save.emit(formData); // Emitir los datos combinados
+      this.closeModal();
     }
   }
 }
